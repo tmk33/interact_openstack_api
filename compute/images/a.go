@@ -5,10 +5,12 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+    
 )
 
-var TOKEN = "gAAAAABjrIzmVFy52OEgz6eKkjBq3vMvQ5L0Xvlgd89N8K1RJflg_KMc1sG4QBRdaSrI6Xr5yvEHkqec9enz6OJYWYGYgXPnNIS_t4MTubL46A_8pWXyvW0jh3IGoEaOZvfzHcBrCIqec5dNEqoW-_a2GE3vfdQKB9mZIu31e3UW3x8U6wjnndc"
 
+
+var TOKEN = "gAAAAABjrJ9vHoIN3fJIPCE-TpZuDgWOMSM9-nSgM2V1vEEqaAp4ULSbup4vgW-domODU00zTSI4R-HJIfV2PQSoOkQvlFbB1YOV_WhYaJRD2PwcRLAOOFLxPRuas1_tmucS_7WdprwE4C1-y8ZdkhUPgXh-DgfcJWLdj3X-Dl36dxnZQ2PUt98"
 
 //images struct
 type Images_Struct struct {
@@ -24,7 +26,7 @@ type Images_Struct struct {
 }
 
 // images list
-func getAllImages() Images_Struct{
+func GetAllImages() Images_Struct {
 	URL := fmt.Sprintf("http://voscontrol:8774/v2.1/images")
     
 	fmt.Println("----------------All Images----------------")
@@ -55,8 +57,8 @@ func getAllImages() Images_Struct{
 }
 
 // print all images
-func showImages() {
-	images := getAllImages()
+func ShowImages() {
+	images := GetAllImages()
 	for _, value := range images.Images {
 		fmt.Printf("Name: %+v\n", value.Name)
 	}
