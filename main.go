@@ -4,9 +4,9 @@ import (
  "fmt"
  _"interact_openstack_api/compute/images"
  _"interact_openstack_api/compute/keypairs"
- _"interact_openstack_api/compute/instances"
+ "interact_openstack_api/compute/instances"
  _"interact_openstack_api/volumes/volumes"
- "interact_openstack_api/network/networks"
+ _"interact_openstack_api/network/networks"
 
 
 )
@@ -16,11 +16,12 @@ var TOKEN = "gAAAAABjrJ9vHoIN3fJIPCE-TpZuDgWOMSM9-nSgM2V1vEEqaAp4ULSbup4vgW-domO
 
 func main() {
 
-	//instances.ShowInstances()
+	instances.ShowInstances()
 	//images.ShowImages()
 	//keypairs.ShowKeypairs()
 	//volumes.ShowVolumes()
-	networks.ShowNetworks()
+	//networks.ShowNetworks()
+	//instances.DeleteInstance("2009d5d1-f320-4f9e-884c-710be0eca641")
 	fmt.Printf("\n")
 	
 }
