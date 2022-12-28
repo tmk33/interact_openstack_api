@@ -7,7 +7,7 @@ import (
  "net/http"
 )
 
-var TOKEN = "gAAAAABjq4_5d9OKdHXr0m2dtHCFoi5TqnknuC77QRh_J8zlC6vZUvUrRVqAw_m0apTxKmHhErApMaMQuDwjCMkp0LdCRYWUFuCTPg9m_ZMxUr-r2fNJwNVvoJJ3Zj6oq7ba24c4fMUDtt9Y1ek-rtt-2A20mrg4TgaQpeQoZKE22e0L_cIyyIE"
+var TOKEN = "gAAAAABjq6PkOZzlX2BxSweNMHkcmI90_qh48tkIyGNKOVWHwIEBUx98tKenjY7K6o4vlauMz7mpOEfmRBicol4_uUph-p1p0LYZ2H1MXAMOzaaLNuYPRV9rUxJgHyg8ZLYRmP_u93iO6WMMmIke3RSsVikJRK5T6543DsTrdIOdbgMguyTArpM"
 
 type Instances_Struct struct {
 	Servers []Servers `json:"servers"`
@@ -46,8 +46,31 @@ type Keypairs_Struct struct {
 	} `json:"keypairs"`
 }
 
+//Volume struct
+type Volumes_Struct struct {
+	Volumes []struct {
+		ID               string `json:"id"`
+		Status           string `json:"status"`
+		Size             int    `json:"size"`
+		AvailabilityZone string `json:"availabilityZone"`
+		CreatedAt        string `json:"createdAt"`
+		Attachments      []struct {
+			ID       string `json:"id"`
+			VolumeID string `json:"volumeId"`
+			ServerID string `json:"serverId"`
+			Device   string `json:"device"`
+		} `json:"attachments"`
+		DisplayName        string      `json:"displayName"`
+		DisplayDescription interface{} `json:"displayDescription"`
+		VolumeType         string      `json:"volumeType"`
+		SnapshotID         interface{} `json:"snapshotId"`
+		Metadata           struct {
+		} `json:"metadata"`
+	} `json:"volumes"`
+}
+
 // instances list
-func listInstances() Instances_Struct {
+func getAllInstances() Instances_Struct {
 	URL := fmt.Sprintf("http://voscontrol:8774/v2.1/servers")
     
 	fmt.Println("----------------All Instances----------------")
@@ -78,14 +101,15 @@ func listInstances() Instances_Struct {
 }
 
 // print all instances
-func showInstances(instances Instances_Struct) {
+func showInstances() {
+	instances := getAllInstances()
 	for _, value := range instances.Servers {
 		fmt.Printf("Name: %+v\n", value.Name)
 	}
 }
 
 // images list
-func listImages() Images_Struct{
+func getAllImages() Images_Struct{
 	URL := fmt.Sprintf("http://voscontrol:8774/v2.1/images")
     
 	fmt.Println("----------------All Images----------------")
@@ -116,14 +140,15 @@ func listImages() Images_Struct{
 }
 
 // print all images
-func showImages(images Images_Struct) {
+func showImages() {
+	images := getAllImages()
 	for _, value := range images.Images {
 		fmt.Printf("Name: %+v\n", value.Name)
 	}
 }
 
 // List keypairs
-func listKeypairs() Keypairs_Struct {
+func getAllKeypairs() Keypairs_Struct {
 	URL := fmt.Sprintf("http://voscontrol:8774/v2.1/os-keypairs")
     
 	fmt.Println("----------------All Keypairs----------------")
@@ -154,17 +179,58 @@ func listKeypairs() Keypairs_Struct {
 }
 
 // print all keypairs
-func showKeypairs(keypairs Keypairs_Struct) {
+func showKeypairs() {
+	keypairs := getAllKeypairs()
 	for _, value := range keypairs.Keypairs {
 		fmt.Printf("Name: %+v\n", value.Keypair.Name)
 	}
 }
 
+// instances list
+func getAllVolumes() Volumes_Struct {
+	URL := fmt.Sprintf("http://voscontrol:8774/v2.1/os-volumes")
+    
+	fmt.Println("----------------All Volumes----------------")
+
+	client := &http.Client{}
+	req, err := http.NewRequest("GET", URL, nil)
+	if err != nil {
+		fmt.Print(err.Error())
+	}
+	
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("X-Auth-Token",TOKEN)
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Print(err.Error())
+	}
+
+	defer resp.Body.Close()
+	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Print(err.Error())
+	}
+	var responseObject Volumes_Struct
+	json.Unmarshal(bodyBytes, &responseObject)
+	
+	return responseObject
+}
+
+// print all instances
+func showVolumes() {
+	volumes := getAllVolumes()
+	for _, value := range volumes.Volumes {
+		fmt.Printf("Name: %+v\n", value.DisplayName)
+	}
+}
+
 func main() {
 
-	
-	all_instances := listInstances()
-	showInstances(all_instances)
+	showInstances()
+	showImages()
+	showKeypairs()
+	showVolumes()
 	
 	fmt.Printf("\n")
 	
