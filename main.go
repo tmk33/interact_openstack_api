@@ -7,7 +7,7 @@ import (
  "net/http"
 )
 
-var TOKEN = "gAAAAABjq6PkOZzlX2BxSweNMHkcmI90_qh48tkIyGNKOVWHwIEBUx98tKenjY7K6o4vlauMz7mpOEfmRBicol4_uUph-p1p0LYZ2H1MXAMOzaaLNuYPRV9rUxJgHyg8ZLYRmP_u93iO6WMMmIke3RSsVikJRK5T6543DsTrdIOdbgMguyTArpM"
+var TOKEN = "gAAAAABjrF1WE-wQRLFWujRO3QX6qT9g84itU9gLBEGmk7zh4Tlce5Rov9VldmXMpB2D4l1AeBbrgsfWkPw06KZ4IRpv1pVCzzF3EsEznlr1SdCOCBV525xCOFoW06F_jM9R91Xz0_TMeKiuEMSN51TlvYHz4ILG7N3OvMFHLP42HKKLImmWkLc"
 
 type Instances_Struct struct {
 	Servers []Servers `json:"servers"`
