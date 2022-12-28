@@ -2,10 +2,11 @@ package main
 
 import (
  "fmt"
- "interact_openstack_api/compute/images"
- "interact_openstack_api/compute/keypairs"
- "interact_openstack_api/compute/instances"
- "interact_openstack_api/volumes/volumes"
+ _"interact_openstack_api/compute/images"
+ _"interact_openstack_api/compute/keypairs"
+ _"interact_openstack_api/compute/instances"
+ _"interact_openstack_api/volumes/volumes"
+ "interact_openstack_api/network/networks"
 
 
 )
@@ -15,11 +16,11 @@ var TOKEN = "gAAAAABjrJ9vHoIN3fJIPCE-TpZuDgWOMSM9-nSgM2V1vEEqaAp4ULSbup4vgW-domO
 
 func main() {
 
-	instances.ShowInstances()
-	images.ShowImages()
-	keypairs.ShowKeypairs()
-	volumes.ShowVolumes()
-
+	//instances.ShowInstances()
+	//images.ShowImages()
+	//keypairs.ShowKeypairs()
+	//volumes.ShowVolumes()
+	networks.ShowNetworks()
 	fmt.Printf("\n")
 	
 }
